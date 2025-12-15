@@ -5,25 +5,27 @@ import SeekerPrivateProfile from "@/components/shared/seeker/private/SeekerPriva
 import { Suspense } from "react";
 import Loading from "@/components/loading/loading";
 
-export const revalidate = 3600 * 24 * 7;
+export const revalidate = 604800; // 3600 * 24 * 7 = 7 days in seconds
 
 const Page = async ({
-  params: { id },
+  params,
   searchParams,
 }: {
-  params: { id: string };
-  searchParams?: { [key: string]: string | string[] | undefined };
+  params: Promise<{ id: string }>;
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }) => {
-  const isPublic = searchParams?.public;
+  const { id: resolvedId } = await params;
+  const resolvedSearchParams = searchParams ? await searchParams : {};
+  const isPublic = resolvedSearchParams?.public;
   const session = await getServerSession(authOptions);
   const user = session?.user;
-  const isMe = isPublic === "true" ? false : id === user?.userName;
+  const isMe = isPublic === "true" ? false : resolvedId === user?.userName;
 
   return isMe ? (
     <SeekerPrivateProfile />
   ) : (
     <Suspense fallback={<Loading />}>
-      <SeekerPublicProfile userId={id} companyId={user?.companyId} />
+      <SeekerPublicProfile userId={resolvedId} companyId={user?.companyId} />
     </Suspense>
   );
 };

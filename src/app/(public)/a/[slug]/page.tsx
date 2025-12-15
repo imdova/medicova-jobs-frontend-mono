@@ -6,12 +6,14 @@ import { Suspense } from "react";
 import CountrySearchResult from "@/components/UI/CountrySearchResult";
 
 const page = async ({
-  params: { slug },
+  params,
   searchParams,
 }: {
-  params: { slug: string };
-  searchParams?: { [key: string]: string | string[] | undefined };
+  params: Promise<{ slug: string }>;
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }) => {
+  const { slug } = await params;
+  const resolvedSearchParams = searchParams ? await searchParams : {};
   const {
     q,
     country,
@@ -28,7 +30,7 @@ const page = async ({
     edu,
     sal,
     age,
-  } = searchParams as {
+  } = resolvedSearchParams as {
     [key: string]: any;
   };
 

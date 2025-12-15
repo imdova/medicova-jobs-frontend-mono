@@ -6,13 +6,15 @@ import CompanyPublicPage from "@/components/shared/company/public/CompanyPublicP
 import CompanyPrivatePage from "@/components/shared/company/private/CompanyPrivatePage";
 
 const Page = async ({
-  params: { id },
+  params,
   searchParams,
 }: {
-  params: { id: string };
-  searchParams?: { [key: string]: string | string[] | undefined };
+  params: Promise<{ id: string }>;
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }) => {
-  const isPublic = searchParams?.public;
+  const { id } = await params;
+  const resolvedSearchParams = searchParams ? await searchParams : {};
+  const isPublic = resolvedSearchParams?.public;
   const data = await getServerSession(authOptions);
   const user = data?.user;
 

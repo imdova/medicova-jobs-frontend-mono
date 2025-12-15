@@ -98,14 +98,14 @@ export default function AdsDashboard() {
           </p>
         </div>
 
-        <Button
-          startIcon={<Plus size={14} />}
-          href="/admin/ads/create"
-          variant="contained"
-          LinkComponent={Link}
-        >
-          Create Campaign
-        </Button>
+        <Link href="/admin/ads/create">
+          <Button
+            startIcon={<Plus size={14} />}
+            variant="contained"
+          >
+            Create Campaign
+          </Button>
+        </Link>
       </div>
 
       {/* Stats Cards */}

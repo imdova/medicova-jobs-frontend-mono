@@ -18,13 +18,15 @@ import { authOptions } from "@/lib/auth/config";
  * @returns the page component
  */
 const page = async ({
-  params: { id },
+  params,
   searchParams,
 }: {
-  params: { id: string };
-  searchParams?: { [key: string]: string | string[] | undefined };
+  params: Promise<{ id: string }>;
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }) => {
-  const isDuplicated = searchParams?.duplicate === "true";
+  const { id } = await params;
+  const resolvedSearchParams = searchParams ? await searchParams : {};
+  const isDuplicated = resolvedSearchParams?.duplicate === "true";
   const result = await getJobById(id);
   const job = result.success && result.data;
   if (!job) return notFound();

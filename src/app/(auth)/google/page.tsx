@@ -1,13 +1,11 @@
 "use client";
 import { signIn } from "next-auth/react";
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 
-export default function Page({
-  searchParams,
-}: {
-  searchParams: { token: string };
-}) {
-  const token = searchParams.token;
+function GoogleAuth() {
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token");
 
   useEffect(() => {
     if (token) {
@@ -20,4 +18,12 @@ export default function Page({
   }, [token]);
 
   return null;
+}
+
+export default function Page() {
+  return (
+    <Suspense fallback={null}>
+      <GoogleAuth />
+    </Suspense>
+  );
 }

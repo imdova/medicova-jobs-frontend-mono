@@ -41,15 +41,16 @@ const tabs: {
 const page = async ({
   searchParams,
 }: {
-  searchParams?: { [key: string]: string | string[] | undefined };
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }) => {
-  const activeTab = (searchParams?.tab as ApplicationStatus) || null;
-  const query = (searchParams?.q as string) || "";
-  const startDate = (searchParams?.startDate as string) || null;
-  const endDate = (searchParams?.endDate as string) || null;
+  const resolvedSearchParams = searchParams ? await searchParams : {};
+  const activeTab = (resolvedSearchParams?.tab as ApplicationStatus) || null;
+  const query = (resolvedSearchParams?.q as string) || "";
+  const startDate = (resolvedSearchParams?.startDate as string) || null;
+  const endDate = (resolvedSearchParams?.endDate as string) || null;
 
-  const page = parseInt(String(searchParams?.page || 1));
-  const limit = parseInt(String(searchParams?.limit || 10));
+  const page = parseInt(String(resolvedSearchParams?.page || 1));
+  const limit = parseInt(String(resolvedSearchParams?.limit || 10));
   const data = await getServerSession(authOptions);
   const user = data?.user;
 
@@ -106,7 +107,7 @@ const page = async ({
         >
           <Tab
             LinkComponent={Link}
-            href={updateSearchParams("tab", "", searchParams)}
+            href={updateSearchParams("tab", "", resolvedSearchParams)}
             value={"all"}
             label={
               <div className="flex items-center gap-2">
@@ -118,7 +119,7 @@ const page = async ({
             <Tab
               key={tab.type}
               LinkComponent={Link}
-              href={updateSearchParams("tab", tab.type, searchParams)}
+              href={updateSearchParams("tab", tab.type, resolvedSearchParams)}
               value={tab.type}
               label={
                 <div className="flex items-center gap-2">

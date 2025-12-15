@@ -31,14 +31,14 @@ export default function CreateCampaignPage() {
           <p className="text-muted-foreground">Create SEO metadata for a new URL</p>
         </div>
         <div className="flex gap-3">
-          <Button
-            variant="outlined"
-            LinkComponent={Link}
-            href={"#"}
-            startIcon={<Eye size={14} />}
-          >
-            Preview
-          </Button>
+          <Link href={"#"}>
+            <Button
+              variant="outlined"
+              startIcon={<Eye size={14} />}
+            >
+              Preview
+            </Button>
+          </Link>
           <Button variant="contained" startIcon={<ChevronRight size={14} />}>
             Create Campaign
           </Button>
