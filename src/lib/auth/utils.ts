@@ -16,10 +16,16 @@ export async function authenticateUser(credentials: any) {
   if (!credentials?.email || !credentials?.password) return null;
   try {
     const response = await serverSignIn(credentials);
-    return response.success && response.data ? response.data : null;
-  } catch (error) {
+    if (response.success && response.data) {
+      return response.data;
+    }
+    // Throw error with message so next-auth can pass it to the client
+    const error = new Error(response.message || "Invalid email or password");
+    throw error;
+  } catch (error: any) {
     console.error("Authentication error:", error);
-    return null;
+    // Re-throw the error so next-auth can handle it properly
+    throw error;
   }
 }
 
