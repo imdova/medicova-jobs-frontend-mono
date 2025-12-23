@@ -199,6 +199,8 @@ export const hasRequiredPermissions = (
 export function getSideBarLinks(user?: User, pathname?: string): NavItem[] {
   let userType = user?.type as RoleState;
   const userPermissions: Permission_Keys[] = user?.permissions || []; // Ensure permissions are available\
+
+  console.log("userType", user);
   if (userType === "employer" && !user?.hasCompany) {
     userType = "unEmployee";
   }
