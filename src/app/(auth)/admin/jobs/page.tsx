@@ -64,14 +64,14 @@ const JobsPage: React.FC = () => {
             ))}
           </Tabs>
         </div>
-        <Button
-          variant="contained"
-          LinkComponent={Link}
-          href={"/employer/job/posted"}
-          startIcon={<Add className="h-5 w-5" />}
-        >
-          <span className="text-nowrap text-sm">New job</span>
-        </Button>
+        <Link href={"/admin/jobs/posted"}>
+          <Button
+            variant="contained"
+            startIcon={<Add className="h-5 w-5" />}
+          >
+            <span className="text-nowrap text-sm">New job</span>
+          </Button>
+        </Link>
       </div>
       {activeTab === "over-view" && <OverviewJobs />}
       {activeTab === "job-list" && <JobList isAdmin={true} />}

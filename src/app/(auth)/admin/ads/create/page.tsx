@@ -32,12 +32,12 @@ export default function CreateCampaignPage() {
         </div>
         <div className="flex gap-3">
           <Link href={"#"}>
-            <Button
-              variant="outlined"
-              startIcon={<Eye size={14} />}
-            >
-              Preview
-            </Button>
+          <Button
+            variant="outlined"
+            startIcon={<Eye size={14} />}
+          >
+            Preview
+          </Button>
           </Link>
           <Button variant="contained" startIcon={<ChevronRight size={14} />}>
             Create Campaign

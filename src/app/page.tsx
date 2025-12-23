@@ -91,12 +91,12 @@ const HomePage = () => {
               {callToActionSection.leftSection.description}
             </p>
             <Link href={callToActionSection.leftSection.button.href}>
-              <Button
-                variant="contained"
-                className="mt-4"
-              >
-                {callToActionSection.leftSection.button.text}
-              </Button>
+            <Button
+              variant="contained"
+              className="mt-4"
+            >
+              {callToActionSection.leftSection.button.text}
+            </Button>
             </Link>
           </div>
           <div
@@ -110,12 +110,12 @@ const HomePage = () => {
             </h5>
             <p className="text-muted-foreground">{callToActionSection.rightSection.description}</p>
             <Link href={callToActionSection.rightSection.button.href}>
-              <Button
-                variant="contained"
-                className="mt-4"
-              >
-                {callToActionSection.rightSection.button.text}
-              </Button>
+            <Button
+              variant="contained"
+              className="mt-4"
+            >
+              {callToActionSection.rightSection.button.text}
+            </Button>
             </Link>
           </div>
         </div>

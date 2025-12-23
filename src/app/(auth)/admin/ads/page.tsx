@@ -99,12 +99,12 @@ export default function AdsDashboard() {
         </div>
 
         <Link href="/admin/ads/create">
-          <Button
-            startIcon={<Plus size={14} />}
-            variant="contained"
-          >
-            Create Campaign
-          </Button>
+        <Button
+          startIcon={<Plus size={14} />}
+          variant="contained"
+        >
+          Create Campaign
+        </Button>
         </Link>
       </div>
 
