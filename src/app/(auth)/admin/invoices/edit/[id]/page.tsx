@@ -3,8 +3,10 @@ import InvoiceForm from "@/components/settings/invoiceForm";
 import { INVOICES_DATA } from "@/constants/invoices.data";
 import { Button } from "@mui/material";
 import { Download } from "lucide-react";
+import { use } from "react";
 
-const Page = ({ params: { id } }: { params: { id: string } }) => {
+const Page = ({ params }: { params: Promise<{ id: string }> }) => {
+  const { id } = use(params);
   const invoice = INVOICES_DATA.find((x) => x.id === id);
   return (
     <div className="my-8">

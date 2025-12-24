@@ -18,7 +18,7 @@ import {
   ArrowLeft,
 } from "lucide-react";
 import Link from "next/link";
-import { Suspense, useState } from "react";
+import { Suspense, useState, use } from "react";
 import { Tabs, Tab, Button } from "@mui/material";
 import SingleEmployersChart from "@/components/charts/single-employer-charts";
 import Loading from "@/components/loading/loading";
@@ -99,7 +99,8 @@ const tabs: { key: Tab; title: string; icon?: React.ReactNode }[] = [
   },
 ];
 // TODO: add company users
-const AdminOverViewPage = ({ params: { id } }: { params: { id: string } }) => {
+const AdminOverViewPage = ({ params }: { params: Promise<{ id: string }> }) => {
+  const { id } = use(params);
   const { data: admins } = useAppSelector((state) => state.admins);
   const admin = admins.find((x) => x.id === id);
   const adminSuperVisor = admins.find((x) => x.adminIds?.includes(id));

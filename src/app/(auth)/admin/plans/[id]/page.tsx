@@ -46,7 +46,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { useState } from "react";
+import { useState, use } from "react";
 
 const statusCards: StatusCardType[] = [
   {
@@ -115,7 +115,8 @@ const planTransactions = (id: string): TransactionType[] => {
   return transactions;
 };
 
-const PlanPage = ({ params: { id } }: { params: { id: string } }) => {
+const PlanPage = ({ params }: { params: Promise<{ id: string }> }) => {
+  const { id } = use(params);
   const [plan, setPlan] = useState(getPlane(id));
   const transactions = planTransactions(id);
   const columns = generateTransactionsColumns();

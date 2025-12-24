@@ -1,5 +1,6 @@
 "use client";
 import { notFound } from "next/navigation";
+import { use } from "react";
 import JobApplicantsResult from "./jobApplicants";
 import { filterSections } from "@/constants";
 import CustomPagination from "@/components/UI/CustomPagination";
@@ -10,7 +11,8 @@ import { API_GET_JOB_APPLICATIONS } from "@/api/employer";
 import Loading from "@/components/loading/loading";
 import { ApplicationsType } from "@/types/seeker";
 
-const Page = ({ params: { id } }: { params: { id: string } }) => {
+const Page = ({ params }: { params: Promise<{ id: string }> }) => {
+  const { id } = use(params);
   const query = toQueryString({ jobId: id });
   const { data, loading, error } = useFetch<
     PaginatedResponse<ApplicationsType>

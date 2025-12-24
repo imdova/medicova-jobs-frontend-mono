@@ -4,10 +4,11 @@ import { INVOICES_DATA } from "@/constants/invoices.data";
 import { Button } from "@mui/material";
 import { Download, Printer, Send, SquarePen } from "lucide-react";
 import Link from "next/link";
-import { useRef } from "react";
+import { useRef, use } from "react";
 import { useReactToPrint } from "react-to-print";
 
-const Page = ({ params: { id } }: { params: { id: string } }) => {
+const Page = ({ params }: { params: Promise<{ id: string }> }) => {
+  const { id } = use(params);
   const invoice = INVOICES_DATA.find((x) => x.id === id);
   const componentRef = useRef<HTMLDivElement>(null);
 

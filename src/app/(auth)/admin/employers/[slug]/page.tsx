@@ -15,7 +15,7 @@ import {
   ArrowLeft,
 } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, use } from "react";
 import { Tabs, Tab, Button } from "@mui/material";
 import SingleEmployersChart from "@/components/charts/single-employer-charts";
 import Loading from "@/components/loading/loading";
@@ -35,9 +35,9 @@ import AssignPlan from "@/components/admin/forms/assignPlan";
 import JobsList from "@/components/shared/company/private/JobsList";
 
 interface SingleUserProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 const cards = [
@@ -103,7 +103,8 @@ const tabs: { key: Tab; title: string; icon?: React.ReactNode }[] = [
 ];
 // TODO: add company users
 const SingleEmployerPage = ({ params }: SingleUserProps) => {
-  const slug = params.slug;
+  const { slug } = use(params);
+  console.log(slug, "slug");
   const {
     data: company,
     loading,

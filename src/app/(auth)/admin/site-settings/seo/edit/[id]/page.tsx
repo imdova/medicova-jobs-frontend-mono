@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, use } from "react";
 import { useRouter } from "next/navigation";
 import { Save, Plus, Eye, ArrowLeft } from "lucide-react";
 import {
@@ -41,7 +41,8 @@ interface SEOFormData {
   language: string;
 }
 
-export default function SEOEditPage({ params }: { params: { id: string } }) {
+export default function SEOEditPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params);
   const router = useRouter();
   const [tabValue, setTabValue] = useState(0);
   const [formData, setFormData] = useState<SEOFormData>({
@@ -74,11 +75,11 @@ export default function SEOEditPage({ params }: { params: { id: string } }) {
   useEffect(() => {
     fetchSEOData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [params.id]);
+  }, [id]);
 
   const fetchSEOData = async () => {
     try {
-      const response = await fetch(`/api/seo/${params.id}`);
+      const response = await fetch(`/api/seo/${id}`);
       if (response.ok) {
         const data = await response.json();
         setFormData(data);
@@ -93,7 +94,7 @@ export default function SEOEditPage({ params }: { params: { id: string } }) {
   const handleSave = async () => {
     setSaving(true);
     try {
-      const response = await fetch(`/api/seo/${params.id}`, {
+      const response = await fetch(`/api/seo/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

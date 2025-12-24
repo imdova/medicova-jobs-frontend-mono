@@ -8,7 +8,7 @@ import { ColumnConfig, JobData } from "@/types";
 import { Eye, ListOrdered, SquarePen, View, UsersRound } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, use } from "react";
 import { Tab, Tabs, Typography } from "@mui/material";
 import Flag from "@/components/UI/flagitem";
 import Loading from "@/components/loading/loading";
@@ -26,9 +26,9 @@ import { Gender } from "@/constants/enums/gender.enum";
 import { ApplicationsType } from "@/types/seeker";
 
 interface SingleUserProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 type TopCountry = {
   id: string;
@@ -114,7 +114,7 @@ const tabs: { key: Tab; title: string; icon?: React.ReactNode }[] = [
 ];
 
 const SingleJobOverview = ({ params }: SingleUserProps) => {
-  const slug = params.slug;
+  const { slug } = use(params);
   const { data: job, loading } = useFetch<JobData>(
     `${API_GET_JOB_BY_ID}${slug}`,
     { defaultLoading: true },
