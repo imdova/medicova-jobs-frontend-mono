@@ -1,12 +1,13 @@
 "use client";
 import { CircularProgress } from "@mui/material";
 import { useSession } from "next-auth/react";
-import { notFound } from "next/navigation";
 import RolesTab from "@/components/settings/RolesTab";
 
 const EmployersRolesSettings = () => {
   const { data: session, status } = useSession();
   const user = session?.user;
+
+  console.log(user, "user", status, "status");
 
   if (status === "loading") {
     return (
@@ -16,7 +17,10 @@ const EmployersRolesSettings = () => {
       </div>
     );
   }
-  if (status === "unauthenticated" || !user) return notFound();
+  
+  if (status === "unauthenticated" || !user) {
+    return null;
+  }
 
   return <RolesTab />;
 };

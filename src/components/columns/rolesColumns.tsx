@@ -95,7 +95,7 @@ export const getRolesColumns = (): ColumnDef<Role>[] => [
   {
     accessorKey: "permissions",
     header: "Permissions",
-    cell: ({ row }) => row.original.permissions.length,
+    cell: ({ row }) => row.original.permissions?.length || 0,
   },
   {
     id: "hidden",
@@ -104,7 +104,7 @@ export const getRolesColumns = (): ColumnDef<Role>[] => [
     enableHiding: true,
     enableColumnFilter: true,
     accessorFn: (row) =>
-      row.permissions.map((permission) => permission.name).join(", "),
+      row.permissions?.map((permission) => permission.name).join(", ") || "",
     cell: () => null,
   },
   {
